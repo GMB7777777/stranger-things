@@ -1,40 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Color Objects</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Benchmark Game</title>
     <style>
-        body {
-            background-color: rgb(200,100,50); 
-        }
-        .color-box {
-            border: 2px solid #000;
-            padding: 20px;
-            margin: 10px;
-            display: inline-block;
-        }
-        .pink {
-            background-color: rgb(50,255,255);
-            
-        }
-        .blue {
-            background-color: rgb(0,0,200);
-        }
-        .gray {
-            background-color: rgb(100,100,100);
-        }
-        .brown {
-            background-color: rgb(200,100,0); 
-        }
-        .blacky {
-            background-color: rgb(0,0,0);
-        }
+        body { font-family: Arial, sans-serif; }
+        h1 { text-align: center; }
+        #game { text-align: center; }
+        #startBtn { padding: 10px 20px; font-size: 20px; }
     </style>
+    <script>
+        let startTime, endTime;
+        function startReactionTest() {
+            const delay = Math.floor(Math.random() * 5000) + 1000;
+            setTimeout(() => {
+                const reactionDiv = document.getElementById('reactionTime');
+                reactionDiv.style.display = 'block';
+                startTime = new Date();
+                reactionDiv.textContent = 'Click now!';
+            }, delay);
+        }
+        function recordReaction() {
+            endTime = new Date();
+            const reactionTime = endTime - startTime;
+            alert(`Your reaction time is ${reactionTime} milliseconds.`);
+            document.getElementById('reactionTime').style.display = 'none';
+        }
+        function startMemoryChallenge() {
+            const sequence = [1, 2, 3, 4, 5]; // This can be randomized
+            let userSequence = [];
+            alert("Memorize this sequence: " + sequence.join(', '));
+            setTimeout(() => {
+                let userInput = prompt("Enter the sequence: (e.g. 1,2,3,4,5)");
+                userSequence = userInput.split(',').map(Number);
+                if (JSON.stringify(sequence) === JSON.stringify(userSequence)) {
+                    alert("Correct!");
+                } else {
+                    alert("Wrong! The correct sequence was " + sequence.join(', '));
+                }
+            }, 5000);
+        }
+    </script>
 </head>
 <body>
-    <div class="color-box pink"> Schönes Pink</div>
-    <div class="color-box blue">Kühles Blau</div>
-    <div class="color-box gray">Dunkles Grau</div>
-    <div class="color-box brown">Kaka</div>
-    <div class="color-box blackyk">Blackyblackblack</div>
+    <h1>Welcome to the Human Benchmark Game</h1>
+    <div id="game">
+        <button id="startBtn" onclick="startReactionTest()">Start Reaction Test</button>
+        <div id="reactionTime" style="display: none;" onclick="recordReaction()"></div>
+        <button onclick="startMemoryChallenge()">Start Memory Challenge</button>
+    </div>
 </body>
 </html>
